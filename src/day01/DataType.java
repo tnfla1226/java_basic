@@ -19,6 +19,7 @@ public class DataType {
         System.out.println("f1 = " + f1);
         System.out.println("d1 = " + d1);
 
+
         double n = 0.0;
         for (int i = 0; i < 100; i++) {
             n += 0.1;
