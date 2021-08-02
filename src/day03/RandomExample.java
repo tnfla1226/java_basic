@@ -15,8 +15,8 @@ public class RandomExample {
 
             Math.random()               ->  0.0 <= ~ < 1.0
             Math.random() * 10          ->  0.0 <= ~ < 10.0
-            (int)(Math.random() * 10)   ->  0 <= ~ 10
-            (int)(Math.random() * 10) + 1   1 <= ~ 11
+            (int)(Math.random() * 10)   ->  0 <= ~ < 10
+            (int)(Math.random() * 10) + 1   1 <= ~ < 11
 
             # 공식: x이상 y이하의 랜덤정수
             (int) (Math.random() * (y-x+1)) + x
