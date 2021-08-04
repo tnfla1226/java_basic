@@ -26,5 +26,6 @@ public class ArrayInsert {
         arr = temp; temp = null;
 
         System.out.println("삽입 후: " + Arrays.toString(arr));
+
     }
 }
