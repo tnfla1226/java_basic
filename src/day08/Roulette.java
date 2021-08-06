@@ -77,6 +77,41 @@ public class Roulette {
             //사망 판정
             if (magazine[bulletPosition]) {
                 System.out.printf("\n빵!! [%s]님 사망....\n", players[turn]);
+                //사망자를 players배열에서 삭제
+                for (int i = turn; i < players.length-1; i++) {
+                    players[i] = players[i+1];
+                }
+                String[] temp = new String[players.length-1];
+                for (int i = 0; i < temp.length; i++) {
+                    temp[i] = players[i];
+                }
+                players = temp; temp = null;
+                playerNum--;
+
+                //System.out.println("남은 인원: " + Arrays.toString(players));
+
+                //탄창 배열에서 총알이 나간 위치를 재조정
+                magazine[bulletPosition] = false;
+                bulletNum--;
+
+                //게임 종료 조건 판단
+                //남은 플레이어가 1명일 때, 총알이 모두 소진되었을 때
+                if (playerNum==1) {
+                    System.out.println("\n# 단 한명만 살아남았습니다. 게임을 종료합니다.");
+                    System.out.println("최후 생존자: " + players[0]);
+                    break;
+                } else if (bulletNum == 0) {
+                    System.out.println("총알이 모두 발사되었습니다. 게임을 종료합니다.");
+                    System.out.println("남은 인원 정보: " + Arrays.toString(players));
+                } else {
+                    System.out.println("남은 인원으로 게임을 계속 진행합니다.");
+                    System.out.println("남은 인원 정보: " + Arrays.toString(players));
+                    //혹시 사망자가 마지막 플레이어면 turn을 0으로 조정
+                    if (turn == players.length) {
+                        turn = 0;
+                    }
+                    continue;
+                }
                 break;
             } else {
                 //생존한 경우: 턴을 넘김
