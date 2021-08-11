@@ -36,5 +36,26 @@ public class PhoneFactory {
         Phone lgV6 = new Phone("LG V6", "에메랄드 그린");
         lgV6.showSpec();
 
+        System.out.println("=================================");
+
+        iPhoneX.battery = new Battery("샤오미");
+
+        System.out.println("아이폰x 배터리: " + iPhoneX.battery.company); //iPhoneX.battery.company로 battery타입의 company필드를 가져올수 있음
+
+        System.out.println("=================================");
+
+//        galaxyS21.powerOff();
+//        iPhoneX.powerOff();
+        galaxyS21.sendMessage(iPhoneX, "에베베베베"); //컨트롤+P 누르면 파라미터 정보 보여줌
+        galaxyS21.sendMessage(iPhoneX, "메롱메롱");
+        iPhoneX.checkMessages();
+
+        iPhoneX.sendMessage(galaxyS21, "히힛");
+        galaxyS21.checkMessages();
+
+        galaxyS21.sendMessage(lgV6, "하이");
+        iPhoneX.sendMessage(lgV6, "안녕");
+        lgV6.checkMessages();
+
     }
 }
