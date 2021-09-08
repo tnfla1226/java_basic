@@ -1,6 +1,7 @@
 package com.kh.hw.member.view;
 
 import com.kh.hw.member.controller.MemberController;
+import com.kh.hw.member.model.vo.Member;
 
 import java.util.Scanner;
 
@@ -42,12 +43,16 @@ public class MemberMenu {
                     insertMember();
                     break;
                 case 2:
+                    searchMember();
                     break;
                 case 3:
+                    updateMember();
                     break;
                 case 4:
+                    deleteMember();
                     break;
                 case 5:
+                    printAll();
                     break;
                 case 9:
                     System.out.println("프로그램을 종료합니다.");
@@ -100,41 +105,233 @@ public class MemberMenu {
         mc.insertMember(id, name, pw, email, gender, age);
 
     }
+    //검색 메뉴 출력 메서드
     public void searchMember() {
 
-    }
-    public void searchId() {
+        while (true) {
+            System.out.println("\n========== 검색 메뉴 ===========");
+            System.out.println("# 1. 아이디로 검색");
+            System.out.println("# 2. 이름으로 검색");
+            System.out.println("# 3. 이메일로 검색");
+            System.out.println("# 9. 메인으로 돌아가기");
+            System.out.print("# 메뉴 입력: ");
+            int menuNo = sc.nextInt();
 
+            switch (menuNo) {
+                case 1:
+                    searchId();
+                    break;
+                case 2:
+                    searchName();
+                    break;
+                case 3:
+                    searchEmail();
+                    break;
+                case 9:
+                    return;
+                default:
+                    System.out.println("메뉴를 잘못 입력했습니다.");
+            }
+        }
+
+    }
+
+    //아이디를 입력할 수 있는 창을 만들어주는 메서드
+    public void searchId() {
+        System.out.print("\n# 아이디를 입력: ");
+        String findId = sc.next();
+
+        Member member = mc.searchId(findId);
+
+        if (member != null) {
+            System.out.println("\n========== 조회 결과 ===========");
+            System.out.println(member.inform());
+        } else {
+            System.out.println("\n조회하신 회원은 없는 회원입니다.");
+        }
     }
     public void searchName() {
+        System.out.print("\n# 이름을 입력: ");
+        String findName = sc.next();
 
+        Member[] members = mc.searchName(findName);
+
+        if (members.length != 0) {
+            System.out.println("\n========== 조회 결과 ===========");
+            for (Member member : members) {
+                System.out.println(member.inform());
+            }
+        } else {
+            System.out.println("\n조회하신 회원은 없는 회원입니다.");
+        }
     }
     public void searchEmail() {
+        System.out.print("\n# 이메일을 입력: ");
+        String findEmail = sc.next();
 
+        Member member = mc.searchEmail(findEmail);
+
+        if (member != null) {
+            System.out.println("\n========== 조회 결과 ===========");
+            System.out.println(member.inform());
+        } else {
+            System.out.println("\n조회하신 회원은 없는 회원입니다.");
+        }
     }
 
+    //회원 정보 수정 메뉴를 출력하는 메서드
     public void updateMember() {
+        while (true) {
+            System.out.println("\n========== 수정 메뉴 ===========");
+            System.out.println("# 1. 비밀번호 수정하기");
+            System.out.println("# 2. 이름 수정하기");
+            System.out.println("# 3. 이메일 수정하기");
+            System.out.println("# 9. 메인으로 돌아가기");
+            System.out.print("# 메뉴 입력: ");
+            int menuNo = sc.nextInt();
+
+            switch (menuNo) {
+                case 1:
+                    updatePassword();
+                    break;
+                case 2:
+                    updateName();
+                    break;
+                case 3:
+                    updateEmail();
+                    break;
+                case 9:
+                    return;
+                default:
+                    System.out.println("메뉴를 잘못 입력했습니다.");
+            }
+        }
 
     }
-    public void updatePassword() {
 
+    //회원의 비밀번호를 바꾸기 위해 사용할 메서드
+    public void updatePassword() {
+        System.out.println("\n# 비밀번호를 변경합니다.");
+        System.out.print("# 아이디를 입력: ");
+        String id = sc.next();
+
+        Member member = mc.searchId(id);
+        if (member == null) {
+            System.out.println("\n# 존재하지 않는 회원입니다.");
+        } else {
+            System.out.printf("# %s님의 비밀번호를 변경합니다.\n", member.getName());
+            System.out.print("# 새로운 비밀번호: ");
+            String newPw = sc.next();
+
+            if(mc.updatePassword(id, newPw)) {
+                System.out.println("\n# 비밀번호 변경에 성공했습니다.");
+            } else {
+                System.out.println("\n# 비밀번호 변경에 실패했습니다.");
+            }
+        }
     }
     public void updateName() {
+        System.out.println("\n# 이름을 변경합니다.");
+        System.out.print("# 아이디를 입력: ");
+        String id = sc.next();
 
+        Member member = mc.searchId(id);
+        if (member == null) {
+            System.out.println("\n# 존재하지 않는 회원입니다.");
+        } else {
+            System.out.printf("# %s님의 이름을 변경합니다.\n", member.getName());
+            System.out.print("# 새로운 이름: ");
+            String newName = sc.next();
+
+            if(mc.updateName(id, newName)) {
+                System.out.println("\n# 이름 변경에 성공했습니다.");
+            } else {
+                System.out.println("\n# 이름 변경에 실패했습니다.");
+            }
+        }
     }
     public void updateEmail() {
+        System.out.println("\n# 이메일을 변경합니다.");
+        System.out.print("# 아이디를 입력: ");
+        String id = sc.next();
 
+        Member member = mc.searchId(id);
+        if (member == null) {
+            System.out.println("\n# 존재하지 않는 회원입니다.");
+        } else {
+            System.out.printf("# %s님의 이메일을 변경합니다.\n", member.getName());
+            System.out.print("# 새로운 이메일: ");
+            String newEmail = sc.next();
+
+            if(mc.updateEmail(id, newEmail)) {
+                System.out.println("\n# 이메일 변경에 성공했습니다.");
+            } else {
+                System.out.println("\n# 이메일 변경에 실패했습니다.");
+            }
+        }
     }
     public void deleteMember() {
+        while (true) {
+            System.out.println("\n========== 삭제 메뉴 ===========");
+            System.out.println("# 1. 특정 회원 삭제하기");
+            System.out.println("# 2. 모든 회원 삭제하기");
+            System.out.println("# 9. 메인으로 돌아가기");
+            System.out.print("# 메뉴 입력: ");
+            int menuNo = sc.nextInt();
 
+            switch (menuNo) {
+                case 1:
+                    deleteOne();
+                    break;
+                case 2:
+                    deleteAll();
+                    break;
+                case 9:
+                    return;
+                default:
+                    System.out.println("메뉴를 잘못 입력했습니다.");
+            }
+        }
     }
     public void deleteOne() {
+        System.out.print("\n삭제할 회원의 아이디: ");
+        String id = sc.next();
+
+        Member member = mc.searchId(id);
+        if (member == null) {
+            System.out.println("\n# 존재하지 않는 회원입니다.");
+        } else {
+            System.out.print("\n정말로 삭제하시겠습니까? [y/n]");
+            String check = sc.next();
+            if (check.equalsIgnoreCase("y")) {
+                mc.delete(id);
+            } else {
+                System.out.println("# 삭제를 취소합니다.");
+            }
+        }
 
     }
     public void deleteAll() {
-
+        System.out.print("\n정말로 전체 삭제하시겠습니까? [y/n]");
+        String check = sc.next();
+        if (check.equalsIgnoreCase("y")) {
+            mc.delete();
+        } else {
+            System.out.println("# 전체 삭제를 취소합니다.");
+        }
     }
+    //모든 회원 정보를 출력하는 메서드
     public void printAll() {
+        Member[] members = mc.printAll();
+        int count = mc.existMemberNum();
 
+        if (count == 0) {
+            System.out.println("\n# 저장된 회원이 없습니다.");
+        } else {
+            System.out.println("\n==================== 전체 회원 정보 ======================");
+            for (int i = 0; i < count; i++) {
+                System.out.println(members[i].inform());
+            }
+        }
     }
 }
