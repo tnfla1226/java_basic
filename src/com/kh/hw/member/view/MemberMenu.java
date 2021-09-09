@@ -294,22 +294,10 @@ public class MemberMenu {
         }
     }
     public void deleteOne() {
-        System.out.print("\n삭제할 회원의 아이디: ");
+        System.out.print("# 삭제할 회원 id를 입력 : ");
         String id = sc.next();
 
-        Member member = mc.searchId(id);
-        if (member == null) {
-            System.out.println("\n# 존재하지 않는 회원입니다.");
-        } else {
-            System.out.print("\n정말로 삭제하시겠습니까? [y/n]");
-            String check = sc.next();
-            if (check.equalsIgnoreCase("y")) {
-                mc.delete(id);
-            } else {
-                System.out.println("# 삭제를 취소합니다.");
-            }
-        }
-
+        mc.delete(id);
     }
     public void deleteAll() {
         System.out.print("\n정말로 전체 삭제하시겠습니까? [y/n]");

@@ -127,23 +127,25 @@ public class MemberController {
 
     public boolean delete(String id) {
 
-        //삭제 인덱스
+        int count = existMemberNum();
+        //삭제할 데이터 인덱스 구하기
         int delIdx = -1;
-        for (int i = 0; i < existMemberNum(); i++) {
+        for (int i = 0; i < count; i++) {
             if (id.equals(m[i].getId())) {
                 delIdx = i;
                 break;
             }
         }
+
+        //삭제 알고리즘
         if (delIdx != -1) {
-            for (int i = delIdx; i < existMemberNum() - 1; i++) {
-                m[i] = m[i + 1];
+            for (int i = delIdx; i < count - 1; i++) {
+                m[i] = m[i+1];
             }
-            m[existMemberNum()] = null;
+            m[count - 1] = null; //마지막 데이터 null로 변경
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     //회원정보를 전체 삭제하는 메서드
@@ -157,5 +159,4 @@ public class MemberController {
     public Member[] printAll() {
         return m;
     }
-
 }
