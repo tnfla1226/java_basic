@@ -13,4 +13,20 @@ public class Driver {
         c.run();
     }
 
+    public Car buyCar(String carName) {
+
+        if (carName.equals("투싼")) {
+            System.out.println("투싼을 구매합니다.");
+            return new Tucson();
+        } else if (carName.equals("소나타")) {
+            System.out.println("소나타를 구매합니다.");
+            return new Sonata();
+        } else if (carName.equals("포르쉐")) {
+            System.out.println("박스터를 구매합니다.");
+            return new Boxster();
+        } else {
+            return null;
+        }
+    }
+
 }
